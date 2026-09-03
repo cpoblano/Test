@@ -1,14 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple JavaScript Idle Game</title>
+    <meta charset="utf-8" />
+    <title>Test</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background: #222; color: #fff; padding-top: 50px; }
-        .container { background: #333; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 10px; }
-        button { background: #00adb5; border: none; color: white; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 10px; }
-        button:hover { background: #007c82; }
-        button:disabled { background: #555; cursor: not-allowed; }
+        * {
+            padding: 0;
+            margin: 0 auto;
+        }
+canvas {
+    background: #0000;
+    display: block;
+    margin: 0 auto;
+}
     </style>
-</head>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1300" height="600"></canvas>
+
+        <script>
+            //Javascript
+            let souls = 0;
+
+            let keys = {
+                space: false
+            };
+
+            let previousSpaceState = false;
+
+            window.addEventListener('keydown', (e) =>{
+                if (e.code === 'space') {
+                    souls += 1;
+                    console.log(myScore);
+            }
+        });
+                const canvas= document.getElementById("myCanvas");
+                const ctx = canvas.getContext('2d');
+
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.font = '30px Arial' ;
+                ctx.fillStyle = 'black' ;
+
+                ctx.fillText('#{souls}', 50, 100);
+
+                requestAnimationFrame(animate);
+                }
+                requestAnimationFrame(animate);
+                
+        </script>
+    </body>
+    </html>
