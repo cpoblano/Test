@@ -21,19 +21,21 @@ canvas {
         <script>
             //Javascript
             let souls = 0;
-
             let keys = {
                 space: false
             };
-
             let previousSpaceState = false;
 
-            window.addEventListener('keydown', (e) =>{
-                if (e.code === 'space') {
-                    souls += 1;
-                    console.log(myScore);
-            }
-        });
+            window.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') keys.space = true;
+            });
+             window.addEventListener('keyup', (e) => {
+                if (e.code === 'Space') keys.space = flase;
+            });
+
+        
+
+
                 const canvas= document.getElementById("myCanvas");
                 const ctx = canvas.getContext('2d');
 
@@ -42,7 +44,7 @@ canvas {
                 ctx.font = '30px Arial' ;
                 ctx.fillStyle = 'black' ;
 
-                ctx.fillText('${souls}', 50, 100);
+                ctx.fillText(`${souls}`, 50, 100);
 
                 requestAnimationFrame(animate);
                 }
