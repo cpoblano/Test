@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #222; color: #fff; padding-top: 50px; }
+        .container { background: #333; max-width: 400px; margin: 0 auto; padding: 20px; border-radius: 10px; }
+        button { background: #00adb5; border: none; color: white; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 10px; }
+        button:hover { background: #007c82; }
+        button:disabled { background: #555; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Gold Miner Idle</h1>
+        <p>Gold: <span id="gold-count">0</span></p>
+        <p>Gold per Second (GPS): <span id="gps-count">0</span></p>
+
+        <!-- Core Mechanics -->
+        <button id="click-btn">Mine Gold</button>
+        <hr>
+        <h3>Shop</h3>
+        <button id="buy-miner-btn" disabled>Buy Auto-Miner (Cost: 10)</button>
+    </div>
+
+    <script>
+        // 1. GAME STATE (VARIABLES)
+        let gold = 0;
+        let miners = 0;
+        let minerCost = 10;
+        let goldPerMiner = 1;
+
+        // DOM Elements
+        const goldCountEl = document.getElementById("gold-count");
+        const gpsCountEl = document.getElementById("gps-count");
+        const clickBtn = document.getElementById("click-btn");
+        const buyMinerBtn = document.getElementById("buy-miner-btn");
+
+        // 2. CLICK MECHANIC
+        clickBtn.addEventListener("click", () => {
+            gold += 1;
+            updateUI();
+        });
+
+        // 3. BUYING UPGRADES (SHOP LOGIC)
+        buyMinerBtn.addEventListener("click", () => {
+            if (gold >= minerCost) {
+                gold -= minerCost;
+                miners += 1;
+                
+                // Exponential price formula: Cost increases by 15% each purchase
+                minerCost = Math.ceil(minerCost * 1.15); 
+                
+                updateUI();
+            }
+        });
+
+        // 4. THE GAME LOOP (PASSIVE INCOME)
+        // Fires every 1000 milliseconds (1 second)
+        setInterval(() => {
+            gold += miners * goldPerMiner;
+            updateUI();
+        }, 1000);
+
+        // 5. UPDATE INTERFACE
+        function updateUI() {
+            goldCountEl.textContent = Math.floor(gold);
+            gpsCountEl.textContent = miners * goldPerMiner;
+            buyMinerBtn.textContent = `Buy Auto-Miner (Cost: ${minerCost})`;
+
+            // Enable or disable the upgrade button depending on funds
+            buyMinerBtn.disabled = gold < minerCost;
+        }
+    </script>
+</body>
+</html>
