@@ -37,20 +37,34 @@ canvas {
                 const canvas= document.getElementById("myCanvas");
                 const ctx = canvas.getContext('2d');
 
-                function animate() {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.font = '40px Stencil Std' ;
-                ctx.fillStyle = 'white' ;
-                
+             
+                function updateSouls(){ 
                 if (keys.space && !previousSpaceState) {
                     souls +=1;
                 }
                 previousSpaceState = keys.space;
+            }
 
+            function drawUI(){
+                ctx.font = `40px Stencil Std` ;
+                ctx.fillStyle = 'white';
                 ctx.fillText(`Souls = ${souls}`, 650, 100);
+            }
+
+            function drawGame(){
+                 // Put game drawing code here 
+            }
+
+            function animate(){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                updateSouls();
+                drawGame();
+                drawUI();
 
                 requestAnimationFrame(animate);
             }
+
             requestAnimationFrame(animate);
                 
         </script>
