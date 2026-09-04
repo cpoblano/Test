@@ -6,10 +6,10 @@
     <style>
         * {
             padding: 0;
-            margin: 0 auto;
+            margin: 0;
         }
 canvas {
-    background: #0000;
+    background: #000000;
     display: block;
     margin: 0 auto;
 }
@@ -24,16 +24,22 @@ canvas {
             let keys = {
                 space: false
             };
+
             let previousSpaceState = false;
 
             window.addEventListener('keydown', (e) => {
                 if (e.code === 'Space') keys.space = true;
             });
              window.addEventListener('keyup', (e) => {
-                if (e.code === 'Space') keys.space = flase;
+                if (e.code === 'Space') keys.space = false;
             });
 
-        
+
+        if (keys.space = true) {
+            souls +=1
+        } else if (keys.space = false) {
+            souls += null
+        };
 
 
                 const canvas= document.getElementById("myCanvas");
@@ -42,7 +48,7 @@ canvas {
                 function animate() {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.font = '30px Arial' ;
-                ctx.fillStyle = 'black' ;
+                ctx.fillStyle = 'white' ;
 
                 ctx.fillText(`${souls}`, 50, 100);
 
