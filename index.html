@@ -34,27 +34,24 @@ canvas {
                 if (e.code === 'Space') keys.space = false;
             });
 
-
-        if (keys.space = true) {
-            souls +=1
-        } else if (keys.space = false) {
-            souls += null
-        };
-
-
                 const canvas= document.getElementById("myCanvas");
                 const ctx = canvas.getContext('2d');
 
                 function animate() {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.font = '30px Arial' ;
+                ctx.font = '40px Stencil Std' ;
                 ctx.fillStyle = 'white' ;
-
-                ctx.fillText(`${souls}`, 50, 100);
-
-                requestAnimationFrame(animate);
+                
+                if (keys.space && !previousSpaceState) {
+                    souls +=1;
                 }
+                previousSpaceState = keys.space;
+
+                ctx.fillText(`Souls = ${souls}`, 650, 100);
+
                 requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
                 
         </script>
     </body>
