@@ -45,6 +45,19 @@ canvas {
     top: 400px;
     transform: translate(-50%, -50%);
 }
+
+#resetButton {
+    background: rgb(150, 50, 50);
+    color: white;
+    border: 2px solid white;
+    font-size: 16px;
+    padding: 8px 16px;
+    cursor: pointer;
+
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
     </style>
     </head>
     <body>
@@ -52,6 +65,7 @@ canvas {
 
         <button id="minerButton">Hire A Miner</button>
         <button id="clickGoldButton">Gain Gold</button>
+        <button id="resetButton">Reset Progress</button>
 
         <script>
             //Javascript
@@ -66,6 +80,52 @@ canvas {
             let lastTime = 0;
             let minerCost = 10;
 
+            // ===== LOCAL STORAGE FUNCTIONS =====
+            function saveProgress() {
+                const gameData = {
+                    gold: gold,
+                    miners: miners,
+                    minerCost: minerCost,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('gameProgress', JSON.stringify(gameData));
+                console.log('Progress saved:', gameData);
+            }
+
+            function loadProgress() {
+                const saved = localStorage.getItem('gameProgress');
+                if (saved) {
+                    try {
+                        const gameData = JSON.parse(saved);
+                        gold = gameData.gold || 0;
+                        miners = gameData.miners || 0;
+                        minerCost = gameData.minerCost || 10;
+                        console.log('Progress loaded:', gameData);
+                    } catch (e) {
+                        console.error('Failed to load progress:', e);
+                    }
+                }
+            }
+
+            function resetProgress() {
+                if (confirm('Are you sure you want to reset all progress? This cannot be undone!')) {
+                    localStorage.removeItem('gameProgress');
+                    gold = 0;
+                    miners = 0;
+                    minerCost = 10;
+                    console.log('Progress reset');
+                }
+            }
+
+            // Load progress when page loads
+            loadProgress();
+
+            // Save progress every 5 seconds
+            setInterval(saveProgress, 5000);
+
+            // Also save when user leaves the page
+            window.addEventListener('beforeunload', saveProgress);
+
             window.addEventListener('keydown', (e) => {
                 if (e.code === 'Space') keys.space = true;
             });
@@ -78,6 +138,7 @@ canvas {
 
                 const minerButton = document.getElementById("minerButton");
                 const clickGoldButton = document.getElementById("clickGoldButton");
+                const resetButton = document.getElementById("resetButton");
 
              //===Update the gold count===\\
                 function updateGold(deltaTime){ 
@@ -99,6 +160,7 @@ canvas {
                     gold -= minerCost;
                     miners += 1;
                     minerCost = Math.floor(minerCost * 1.15); // Increase cost for next miner
+                    saveProgress(); // Save immediately when buying miner
                 }
             });
 
@@ -106,11 +168,13 @@ canvas {
                 gold += 1;
             });
 
+            resetButton.addEventListener('click', resetProgress);
+
             function drawUI(){
               {  ctx.font = `40px Stencil Std` ;
                 ctx.fillStyle = 'white';
                 ctx.fillText(`Gold = ${gold}`, 575, 100);}
-             {   ctx.font = `20px Stencil Std` ;
+              {   ctx.font = `20px Stencil Std` ;
                 ctx.fillStyle = 'white';
                 ctx.fillText(`Miners = ${miners}`, 600, 150);}
                 {   ctx.font = `20px Stencil Std` ;
