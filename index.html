@@ -184,6 +184,12 @@ canvas {
 
             function drawGame(){
                  // Put game drawing code here 
+                 ctx.strokeStyle = "#474747";
+              ctx.fillStyle = "#474747";
+                 ctx.beginPath();
+                 ctx.roundRect(270, 200, 250, 300, [40]);
+                 ctx.fill();
+                 ctx.stroke();
             }
 
             function animate(currentTime) {
