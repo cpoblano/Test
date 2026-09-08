@@ -8,24 +8,63 @@
             padding: 0;
             margin: 0;
         }
+        body {
+            background: #000000;
+        }
 canvas {
     background: #000000;
     display: block;
     margin: 0 auto;
+}
+
+#minerButton {
+    background: rgb(75, 75, 75);
+    color: white;
+    border: 2px solid white;
+    font-size: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
+
+    position: absolute;
+    left: 50%;
+    top: 300px;
+    transform: translate(-50%, -50%);
+}
+
+#clickGoldButton {
+    background: rgb(75, 75, 75);
+    color: white;
+    border: 2px solid white;
+    font-size: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+
+    position: absolute;
+    left: 50%;
+    top: 400px;
+    transform: translate(-50%, -50%);
 }
     </style>
     </head>
     <body>
         <canvas id="myCanvas" width="1300" height="600"></canvas>
 
+        <button id="minerButton">Hire A Miner</button>
+        <button id="clickGoldButton">Gain Gold</button>
+
         <script>
             //Javascript
-            let souls = 0;
+            let gold = 0;
+            let miners = 0;
             let keys = {
                 space: false
             };
 
             let previousSpaceState = false;
+            let goldTimer = 0;
+            let lastTime = 0;
+            let minerCost = 10;
 
             window.addEventListener('keydown', (e) => {
                 if (e.code === 'Space') keys.space = true;
@@ -37,28 +76,58 @@ canvas {
                 const canvas= document.getElementById("myCanvas");
                 const ctx = canvas.getContext('2d');
 
-             
-                function updateSouls(){ 
+                const minerButton = document.getElementById("minerButton");
+                const clickGoldButton = document.getElementById("clickGoldButton");
+
+             //===Update the gold count===\\
+                function updateGold(deltaTime){ 
                 if (keys.space && !previousSpaceState) {
-                    souls +=1;
+                    gold +=1;
                 }
                 previousSpaceState = keys.space;
+
+                goldTimer += deltaTime;
+
+                if (goldTimer >= 1) {
+                    gold += miners;
+                    goldTimer -= 1;
+                }
             }
 
+            minerButton.addEventListener('click', () => {
+                if (gold >= minerCost) {
+                    gold -= minerCost;
+                    miners += 1;
+                    minerCost = Math.floor(minerCost * 1.15); // Increase cost for next miner
+                }
+            });
+
+            clickGoldButton.addEventListener('click', () => {
+                gold += 1;
+            });
+
             function drawUI(){
-                ctx.font = `40px Stencil Std` ;
+              {  ctx.font = `40px Stencil Std` ;
                 ctx.fillStyle = 'white';
-                ctx.fillText(`Souls = ${souls}`, 650, 100);
+                ctx.fillText(`Gold = ${gold}`, 575, 100);}
+             {   ctx.font = `20px Stencil Std` ;
+                ctx.fillStyle = 'white';
+                ctx.fillText(`Miners = ${miners}`, 600, 150);}
+                {   ctx.font = `20px Stencil Std` ;
+                ctx.fillStyle = 'white';
+                ctx.fillText(`Miner Cost = ${minerCost} Gold`, 560, 200);}
             }
 
             function drawGame(){
                  // Put game drawing code here 
             }
 
-            function animate(){
+            function animate(currentTime) {
+                const deltaTime = (currentTime - lastTime) / 1000; // Convert to seconds
+                lastTime = currentTime;
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                updateSouls();
+                updateGold(deltaTime);
                 drawGame();
                 drawUI();
 
