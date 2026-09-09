@@ -196,7 +196,7 @@ canvas {
                 if (gold >= upgradeCost) {
                     gold -= upgradeCost
                     upgradeMultiplyer+= 2;
-                    upgradeCost= Math.floor(upgradeCost* 1.20); // Increase cost for next miner
+                    upgradeCost= Math.floor(upgradeCost* 1.25); // Increase cost for next miner
                     saveProgress(); // Save immediately when buying miner
                 }
             });
@@ -209,10 +209,10 @@ canvas {
                 ctx.fillText(`Gold = ${gold}`, 155, 100);}
               {   ctx.font = `20px Stencil Std` ;
                 ctx.fillStyle = 'white';
-                ctx.fillText(`Miners = ${miners}`, 185, 150);}
+                ctx.fillText(`Miners = ${miners}`, 190, 150);}
                 {   ctx.font = `20px Stencil Std` ;
                 ctx.fillStyle = 'white';
-                ctx.fillText(`Miner Cost = ${minerCost} Gold`, 90, 200);}
+                ctx.fillText(`Miner Cost = ${minerCost} Gold`, 120, 200);}
             }
 
             function drawGame(){
