@@ -9,10 +9,10 @@
             margin: 0;
         }
         body {
-            background: #000000;
+            background: #bbbbbb;
         }
 canvas {
-    background: #000000;
+    background: #bebebe;
     display: block;
     margin: 0 auto;
 }
@@ -184,14 +184,21 @@ canvas {
 
             function drawGame(){
                  // Put game drawing code here 
-                 ctx.strokeStyle = "#474747";
+                  { ctx.strokeStyle = "gray";
+                 ctx.fillStyle = "gray";
+                ctx.beginPath();
+                 ctx.roundRect(250, -50, 500, 750, [40]);
+                 ctx.fill();
+                 ctx.stroke();
+                 ctx.stroke();
+                 }
+                { ctx.strokeStyle = "#474747";
               ctx.fillStyle = "#474747";
                  ctx.beginPath();
                  ctx.roundRect(-50, -50, 500, 750, [40]);
                  ctx.fill();
-                 ctx.stroke();
             }
-
+        }
             function animate(currentTime) {
                 const deltaTime = (currentTime - lastTime) / 1000; // Convert to seconds
                 lastTime = currentTime;
