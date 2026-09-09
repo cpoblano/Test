@@ -174,7 +174,7 @@ canvas {
                 goldTimer += deltaTime;
 
                 if (goldTimer >= 1) {
-                    gold += miners;
+                    gold += miners * upgradeMultiplyer
                     goldTimer -= 1;
                 }
             }
