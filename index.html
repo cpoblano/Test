@@ -79,6 +79,7 @@ canvas {
             let goldTimer = 0;
             let lastTime = 0;
             let minerCost = 10;
+            let upgradeMultiplyer = 0;
 
             // ===== LOCAL STORAGE FUNCTIONS =====
             function saveProgress() {
@@ -86,6 +87,7 @@ canvas {
                     gold: gold,
                     miners: miners,
                     minerCost: minerCost,
+                    upgradeMultiplyer: upgradeMultiplyer,
                     timestamp: new Date().toISOString()
                 };
                 localStorage.setItem('gameProgress', JSON.stringify(gameData));
@@ -100,6 +102,7 @@ canvas {
                         gold = gameData.gold || 0;
                         miners = gameData.miners || 0;
                         minerCost = gameData.minerCost || 10;
+                        upgradeMultiplyer = gameData.upgradeMultiplyer|| 0;
                         console.log('Progress loaded:', gameData);
                     } catch (e) {
                         console.error('Failed to load progress:', e);
@@ -113,6 +116,7 @@ canvas {
                     gold = 0;
                     miners = 0;
                     minerCost = 10;
+                    upgradeMultiplyer = 0;
                     console.log('Progress reset');
                 }
             }
@@ -121,7 +125,7 @@ canvas {
             loadProgress();
 
             // Save progress every 5 seconds
-            setInterval(saveProgress, 5000);
+            setInterval(saveProgress, 1000);
 
             // Also save when user leaves the page
             window.addEventListener('beforeunload', saveProgress);
@@ -143,7 +147,7 @@ canvas {
              //===Update the gold count===\\
                 function updateGold(deltaTime){ 
                 if (keys.space && !previousSpaceState) {
-                    gold +=1;
+                      gold +=1 * upgradeMultiplyer
                 }
                 previousSpaceState = keys.space;
 
