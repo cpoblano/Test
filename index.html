@@ -79,7 +79,7 @@ canvas {
             let goldTimer = 0;
             let lastTime = 0;
             let minerCost = 10;
-            let upgradeMultiplyer = 0;
+            let upgradeMultiplyer = 1;
 
             // ===== LOCAL STORAGE FUNCTIONS =====
             function saveProgress() {
@@ -102,7 +102,7 @@ canvas {
                         gold = gameData.gold || 0;
                         miners = gameData.miners || 0;
                         minerCost = gameData.minerCost || 10;
-                        upgradeMultiplyer = gameData.upgradeMultiplyer|| 0;
+                        upgradeMultiplyer = gameData.upgradeMultiplyer|| 1;
                         console.log('Progress loaded:', gameData);
                     } catch (e) {
                         console.error('Failed to load progress:', e);
@@ -116,7 +116,7 @@ canvas {
                     gold = 0;
                     miners = 0;
                     minerCost = 10;
-                    upgradeMultiplyer = 0;
+                    upgradeMultiplyer = 1;
                     console.log('Progress reset');
                 }
             }
